@@ -3,6 +3,7 @@ import './App.css';
 import ContactForm from './Components/ContactForm/ContactForm';
 import { nanoid } from 'nanoid';
 import ContactList from './Components/ContactList/ContactList';
+import Filter from './Components/Filter/Filter';
 
 class App extends Component {
     state = {
@@ -12,27 +13,54 @@ class App extends Component {
             { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
             { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
         ],
+        filter: '',
     };
     addContact = name => {
-        console.log(name);
         name.id = nanoid();
-        this.setState(prevState => ({
-            contacts: [...prevState.contacts, name],
-        }));
+
+        const contact = { ...name };
+        this.checkContact(name) !== 0
+            ? this.setState(prevState => ({
+                  contacts: [...prevState.contacts, contact],
+              }))
+            : alert(`${contact.name} is already in contacts`);
     };
-    getContacts = () => {
+    checkContact(index) {
         const { contacts } = this.state;
-        return contacts.map(contact => contact.name.toLowerCase());
+        return contacts.findIndex(contact => contact.name === index.name);
+    }
+
+    getContacts = () => {
+        const { contacts, filter } = this.state;
+        const normolizedFilter = filter.toLowerCase();
+        return contacts.filter(contact =>
+            contact.name.toLowerCase().includes(normolizedFilter),
+        );
+    };
+    changeFilter = event => {
+        this.setState({ filter: event.currentTarget.value });
+    };
+    deleteContact = id => {
+        this.setState(prevState => ({
+            contacts: [...prevState.contacts].filter(
+                contact => contact.id !== id,
+            ),
+        }));
     };
     render() {
         const getContacts = this.getContacts();
+        const { filter } = this.state;
         return (
             <div className="App">
                 <h1>Phonebook</h1>
                 <ContactForm onSubmit={this.addContact} />
                 <h2>Contacts</h2>
+                <Filter value={filter} onChange={this.changeFilter} />
                 {getContacts.length ? (
-                    <ContactList contacts={this.state.contacts} />
+                    <ContactList
+                        contacts={getContacts}
+                        onDelete={this.deleteContact}
+                    />
                 ) : (
                     <p>Nothing</p>
                 )}

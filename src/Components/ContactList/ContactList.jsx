@@ -7,16 +7,27 @@ class ContactList extends Component {
             PropTypes.shape({
                 id: PropTypes.string.isRequired,
                 name: PropTypes.string.isRequired,
-            }).isRequired,
+                number: PropTypes.string.isRequired,
+            }),
         ).isRequired,
     };
     render() {
-        const { contacts } = this.props;
+        const { contacts, onDelete } = this.props;
         return (
             <ul>
                 {contacts.map(contact => (
                     <li key={contact.id}>
-                        <p>{contact.name}</p>
+                        <p>
+                            {contact.name}: <span>{contact.number}</span>
+                        </p>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                onDelete(contact.id);
+                            }}
+                        >
+                            Delete
+                        </button>
                     </li>
                 ))}
             </ul>
