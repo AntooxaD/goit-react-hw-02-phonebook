@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 // import { Component } from 'react';
+import { TitleFilter, InputFilter } from '../Styled/Styled';
 
 const Filter = ({ value, onChange }) => (
     <label>
-        <h3> Find contact by name</h3>
-        <input type="name" value={value} onChange={onChange} />
+        <TitleFilter> Find contact by name</TitleFilter>
+        <InputFilter type="text" value={value} onChange={onChange} />
     </label>
 );
 

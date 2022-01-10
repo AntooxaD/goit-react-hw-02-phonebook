@@ -4,6 +4,7 @@ import ContactForm from './Components/ContactForm/ContactForm';
 import { nanoid } from 'nanoid';
 import ContactList from './Components/ContactList/ContactList';
 import Filter from './Components/Filter/Filter';
+import { Title } from './Components/Styled/Styled';
 
 class App extends Component {
     state = {
@@ -19,7 +20,7 @@ class App extends Component {
         name.id = nanoid();
 
         const contact = { ...name };
-        this.checkContact(name) !== 0
+        this.checkContact(name) === -1
             ? this.setState(prevState => ({
                   contacts: [...prevState.contacts, contact],
               }))
@@ -52,9 +53,9 @@ class App extends Component {
         const { filter } = this.state;
         return (
             <div className="App">
-                <h1>Phonebook</h1>
+                <Title>Phonebook</Title>
                 <ContactForm onSubmit={this.addContact} />
-                <h2>Contacts</h2>
+                <Title>Contacts</Title>
                 <Filter value={filter} onChange={this.changeFilter} />
                 {getContacts.length ? (
                     <ContactList
