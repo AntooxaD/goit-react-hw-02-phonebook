@@ -15,6 +15,7 @@ const List = styled.ul`
     color: palevioletred;
 `;
 const ListItem = styled.li`
+    height: 20px;
     display: flex;
     justify-content: space-between;
     :not(:last-of-type) {

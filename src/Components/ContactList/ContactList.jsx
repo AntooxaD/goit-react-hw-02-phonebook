@@ -1,19 +1,8 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
 import { BtnDelete, List, ListItem } from '../Styled/Styled';
 
-class ContactList extends Component {
-    static propTypes = {
-        contacts: PropTypes.arrayOf(
-            PropTypes.shape({
-                id: PropTypes.string.isRequired,
-                name: PropTypes.string.isRequired,
-                number: PropTypes.string.isRequired,
-            }),
-        ).isRequired,
-    };
-    render() {
-        const { contacts, onDelete } = this.props;
+function ContactList ({ contacts, onDelete })  {
+   
         return (
             <List>
                 {contacts.map(contact => (
@@ -34,5 +23,15 @@ class ContactList extends Component {
             </List>
         );
     }
-}
+
+ ContactList.propTypes = {
+     contacts: PropTypes.arrayOf(
+         PropTypes.shape({
+             id: PropTypes.string.isRequired,
+             name: PropTypes.string.isRequired,
+             number: PropTypes.string.isRequired,
+         }),
+     ).isRequired,
+};
+ 
 export default ContactList;

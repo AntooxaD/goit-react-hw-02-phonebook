@@ -16,19 +16,23 @@ class App extends Component {
         ],
         filter: '',
     };
-    addContact = name => {
-        name.id = nanoid();
+    addContact = data => {
+        data.id = nanoid();
 
-        const contact = { ...name };
-        this.checkContact(name) === -1
-            ? this.setState(prevState => ({
-                  contacts: [...prevState.contacts, contact],
-              }))
-            : alert(`${contact.name} is already in contacts`);
+        const contact = { ...data };
+        if (!this.checkContact(data.name)) {
+            this.setState(prevState => ({
+                contacts: [...prevState.contacts, contact],
+            }));
+        } else {
+            alert(`${contact.name} is already in contacts`);
+        }
     };
     checkContact(index) {
         const { contacts } = this.state;
-        return contacts.findIndex(contact => contact.name === index.name);
+        return contacts.find(
+            contact => contact.name.toLowerCase() === index.toLowerCase(),
+        );
     }
 
     getContacts = () => {
